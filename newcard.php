@@ -18,7 +18,14 @@
 </head>
 
 <body>
-<div class="title-product-main">										
+<div class="title-product-main">
+	<br>
+<form action="" method="post" class="form-inline" role="form">
+		<div class="form-group">
+			<input type="text" class="form-control" name="search" placeholder="Search...." style= width:50%;>
+		</div>
+		<button type="submit" class="btn-btn-primary">Search</button>
+	</form>										
 	<h3 class="section-title">Thời Trang Nữ</h3>										
 	</div>										
 	<div class="content-product-main">										
@@ -26,15 +33,20 @@
 
 	<?php			
     $conn = mysqli_connect("localhost", "root", "", "demo");							
-	$sql = "SELECT id,image,name,price,des FROM prd  LIMIT 8";										
+	$sql = "SELECT id,image,name,price,des FROM prd  Order By id DESC";
+	// $sql = "SELECT*FROM prd";
+	if (isset($_POST['search'])){
+		$s = $_POST['search'];	
+		$sql = "SELECT id,image,name,price,des FROM prd WHERE name LIKE '%$s%' Order By id DESC";
+	}
+
 	$result = $conn->query($sql);	// 							
 	while ($kq = mysqli_fetch_assoc($result)) {										
 	?>		
-    								
 	<div class="col-md-3 col-sm-6 text-center">										
 	<div class="thumbnail">										
 	<div class="hoverimage1">										
-	<img src= "<?php echo $kq['image']; ?>" width="200px" height="250">										
+	<img src= "<?php echo $kq['image']; ?>" width="250px" height="250">										
 	</div>										
 	<div class="name-product">										
 	<?php echo $kq['name']; ?>										
@@ -65,6 +77,7 @@
 
 	</div><!-- /row -->		
 
-	</div><!-- /Thời Trang Nữ -->										
+	</div><!-- /Thời Trang Nữ -->	
+	<br>									
 
 </html>
